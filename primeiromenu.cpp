@@ -124,7 +124,7 @@ int menu(int lin1, int col1, int qtd, char lista[3][40]){
      
         linha=lin1+2;
         for(i=0;i<qtd;i++){           
-           if(i+1==opc)textColor(BLACK, _BLACK);
+           if(i+1==opc)textColor(YELLOW, _BLACK);
            else textColor(BLACK, _YELLOW);
         linhaCol(linha,col1+2);
         printf("%s",lista[i]);
@@ -182,8 +182,8 @@ int menu(int lin1, int col1, int qtd, char lista2[3][60]){
      
         linha=lin1+2;
         for(i=0;i<qtd;i++){           
-           if(i+1==opc)textColor(BLACK, _YELLOW);
-           else textColor(BLACK, _YELLOW);
+           if(i+1==opc)textColor(YELLOW, _BLACK);
+           else textColor(YELLOW, _BLACK);
         linhaCol(linha,col1+2);
         printf("%s",lista2[i]);
         linha +=2;
@@ -222,13 +222,13 @@ int main()
     char lista2[5][60]{"WASD -> Movimentaçao","Encostar nas maCas para crescer","Cuidado para nao bater em si mesmo!!!", "Tente em maior tempo possivel comer 20 macas!!!", "PRESS ENTRER PARA SAIR"};
     setlocale(LC_ALL,"");
 	while(true){
-       opc = menu(10,10,5,lista);
+       opc = menu(10,80,5,lista);
     
        if (opc==5){
        return 0;
        }
        if (opc==2){
-          opc = menu(10,10,5,lista2);
+          opc = menu(10,80,5,lista2);
           if(opc==3 || opc==1 || opc==2 || opc == 4 || opc == 5){
 			system("cls"); 
 		  }
