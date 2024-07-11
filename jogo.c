@@ -9,7 +9,49 @@
 int largura = 80, altura = 20;
 int velocidade = 100;
 
-//
+void textColor(int letras, int fundo);
+  //COR DA LETRA
+  enum{BLACK,                 //0
+       BLUE,                  //1
+       GREEN,                 //2
+       CYAN,                  //3
+       RED,                   //4
+       MAGENTA,               //5
+       BROWN,                 //6
+       LIGHTGRAY,             //7
+       DARKGRAY,              //8
+       LIGHTBLUE,             //9
+       LIGHTGREEN,            //10
+       LIGHTCYAN,             //11
+       LIGHTRED,              //12
+       LIGHTMAGENTA,          //13
+       YELLOW,                //14
+       WHITE                  //15
+       
+       };  
+  //COR DO FUNDO
+  enum{_BLACK=0,                 //0
+       _BLUE=16,                  //1
+       _GREEN=32,                 //2
+       _CYAN=48,                  //3
+       _RED=64,                   //4
+       _MAGENTA=80,               //5
+       _BROWN=96,                 //6
+       _LIGHTGRAY=112,             //7
+       _DARKGRAY=128,              //8
+       _LIGHTBLUE=144,             //9
+       _LIGHTGREEN=160,            //10
+       _LIGHTCYAN=176,             //11
+       _LIGHTRED=192,              //12
+       _LIGHTMAGENTA=208,          //13
+       _YELLOW=224,                //14
+       _WHITE=240                  //15       
+       };  
+       
+
+void textColor(int letra, int fundo){
+     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), letra + fundo);
+     }
 
 typedef struct
 {
@@ -399,7 +441,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
         {
             system("cls");
             posicao(10,1);
-            //
+            textColor(RED, _BLACK);
             printf("%s","J O G O  D A  C O B R I N H A");
             printf("\n\n\n");
             for (count=0; count<7; count++)
@@ -462,7 +504,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                 case 2:
                     system("cls");
                     posicao(10,1);
-
+                    
                     printf("%s","J O G O  D A  C O B R I N H A");
                     printf("\n\n\n");
 
@@ -552,12 +594,11 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     posicao(10,(altura/2)-6);
                     printf("INSTRUCOES:\n\n");
-                    printf("- O objetivo do jogo e comer 20 cabeças de TALES sorridente \nno menor tempo possivel!\n");
-                    printf("- Se a cobra bater nela mesma o jogo acaba!\n\n");
+                    printf("-> O objetivo do jogo e comer 20 cabeças de TALES sorridente \nno menor tempo possivel para obter melhor ranking!\n");
+                    printf("-> Se a cobra bater nela mesma o jogo acaba! (paredes nao contam como derrota)\n\n");
                     printf("CONTROLES: \n\n");
-                    printf("- Use as setas do teclado ou as letras \"WASD\" \npara alterar a direcao da cobra!\n\n\n");
-
-                    printf("Pressione uma tecla para voltar!");
+                    printf("-> Use as setas do teclado ou as letras \"WASD\" \npara alterar a direcao da cobra!\n\n\n");
+                    printf("Pressione qualquer tecla para voltar!");
                     getchar();
 
                     system("cls");
