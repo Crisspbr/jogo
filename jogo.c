@@ -504,7 +504,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                 case 2:
                     system("cls");
                     posicao(10,1);
-                    
+
                     printf("%s","J O G O  D A  C O B R I N H A");
                     printf("\n\n\n");
 
@@ -594,10 +594,11 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     posicao(10,(altura/2)-6);
                     printf("INSTRUCOES:\n\n");
-                    printf("-> O objetivo do jogo e comer 20 cabeças de TALES sorridente \nno menor tempo possivel para obter melhor ranking!\n");
-                    printf("-> Se a cobra bater nela mesma o jogo acaba! (paredes nao contam como derrota)\n\n");
+                    printf("-> O objetivo do jogo e comer 20 cabeCas de TALES sorridente \nno menor tempo possivel para obter melhor ranking!\n");
+                    printf("-> Se a cobra bater nela mesma o jogo acaba!(paredes nao contam como derrota!!!)\n\n");
                     printf("CONTROLES: \n\n");
                     printf("-> Use as setas do teclado ou as letras \"WASD\" \npara alterar a direcao da cobra!\n\n\n");
+
                     printf("Pressione qualquer tecla para voltar!");
                     getchar();
 
@@ -612,7 +613,21 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                 }
                 case 6:
-                    //
+	                system("cls");
+                    printf("          (\n");
+                    printf("       __..)__\n");
+                    printf("    .'       `'.\n");
+                    printf("    / - -        `\.\n");
+                    printf("   /(')(')         \.\n");
+                    printf("   /  ^        )   | \n");
+                    printf("   /.--.           |\n");
+                    printf("    /--'          /\n");
+                    printf("     /__.-' __..''\n");
+                    printf("    /     |\n\n");    
+                    printf("CUIDADO COM O BEBE TALES GABRIEL!!!!");
+                    getchar();
+                    system("cls");
+                      exibirMenu(recordes, 100000,trajeto);
                     return 0;
                     break;
 
