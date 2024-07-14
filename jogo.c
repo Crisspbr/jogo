@@ -250,34 +250,35 @@ void mapa(int largura, int altura)   //Desenha o mapa
     printf("%s","S N A K E");
 }
 
-int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *recordes, double tempo_decorrido)
+int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, PilhaRecordes*pilha)
 {
    int game=0;
-
+    
     for(int i=3; i<tam; i++)
     {
          if (x[0]<= 2 || y[0]<= 3)
         {
             game = 1;
             posicao((largura/2)-4,altura/2);
-           printf("PERDEU!!!");
-           getchar();
-            system("cls");
-            salvarPontuacao(tempo_decorrido, Pontuador, &recordes);
+            printf("PERDEU!!!");
             getchar();
+            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
+            getchar();
+            return;
         }
           if(x[0]==x[i] && y[0]==y[i]){
            game = 1;
            posicao((largura/2)-4,altura/2);
            printf("PERDEU!!!");
            getchar();
-            system("cls");
-           salvarPontuacao(tempo_decorrido, Pontuador, &recordes);
+           salvarPontuacao(tempo_decorrido, Pontuador, pilha);
            getchar();
+           return;
         }
 
     }
     return game;
+
 }
 
 void snake(int x[100], int y[100], int tam, char direcao)   //Desenha a cobrinha
@@ -457,7 +458,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
         {
             system("cls");
             posicao(10,1);
-            textColor(RED, _WHITE);
+            textColor(LIGHTBLUE, _WHITE);
             printf("%s","S N A K E");
             printf("\n\n\n");
             for (count=0; count<7; count++)
@@ -636,7 +637,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     printf("   /.--.           |\n");
                     printf("    /--'          /\n");
                     printf("     /__.-' __..''\n");
-                    printf("    /     |\n\n");    
+                    printf("    /     |\n\n");
                     printf("CUIDADO COM O BEBE TALES GABRIEL!!!!");
                     getchar();
                     system("cls");
@@ -718,7 +719,7 @@ int main()
 
 
 
-            over = gameOver(tam,x,y, Pontuador, pilha , tempo_decorrido);
+            over = gameOver(tam,x,y, tempo_decorrido, Pontuador, &recordes);
 
             switch(direcao)
             {
@@ -819,7 +820,6 @@ int main()
                 printf("%s%.2f","o seu tempo foi : ",tempo_decorrido); //Armazenar no RANKING
                 getchar();
 
-                salvarPontuacao(tempo_decorrido,Pontuador, &recordes);
             }
         }
     }
