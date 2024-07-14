@@ -148,7 +148,7 @@ void exibirRecordes(PilhaRecordes* pilha)
         {
             printf("%d. Nome: %s\n", i + 1, pilha->recordes[i].nome);
             printf("   Tempo: %.2f segundos\n", pilha->recordes[i].tempo);
-            printf(" Pontuaçao: %d\n",pilha->recordes[i].Pontuaçao1);
+            printf(" Pontuacao: %d\n",pilha->recordes[i].Pontuaçao1);
         }
     }
 
@@ -250,30 +250,31 @@ void mapa(int largura, int altura)   //Desenha o mapa
     printf("%s","S N A K E");
 }
 
-int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *pilha, double tempo_decorrido)
+int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *recordes, double tempo_decorrido)
 {
    int game=0;
 
     for(int i=3; i<tam; i++)
     {
-         if(x[0]==x[i] && y[0]==y[i]){
-            game = 1;
-            posicao((largura/2)-4,altura/2);
-            printf("PERDEU!!!");
-            getchar();
-            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
-            getchar();
-        }
-        if (x[0]== 2 || y[0]== 3)
+         if (x[0]<= 2 || y[0]<= 3)
         {
             game = 1;
             posicao((largura/2)-4,altura/2);
-            printf("PERDEU!!!");
-            getchar();
-            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
+           printf("PERDEU!!!");
+           getchar();
+            system("cls");
+            salvarPontuacao(tempo_decorrido, Pontuador, &recordes);
             getchar();
         }
-        
+          if(x[0]==x[i] && y[0]==y[i]){
+           game = 1;
+           posicao((largura/2)-4,altura/2);
+           printf("PERDEU!!!");
+           getchar();
+            system("cls");
+           salvarPontuacao(tempo_decorrido, Pontuador, &recordes);
+           getchar();
+        }
 
     }
     return game;
@@ -311,7 +312,7 @@ void refazerTrajetoJogo(int tamanhoTrajeto,Posicao trajeto[]) {
     int contador = 0;
     int i = 0;
 
-    while (contador < tamanhoTrajeto && fscanf(arquivo, "%d,%d,%d\n", &trajeto[contador].x, &trajeto[contador].y, &tamanhoCobrinha) == 3) {
+    while (contador < tamanhoTrajeto && fscanf(arquivo, "%d,%d,%d\n", &trajeto[contador].x, &trajeto[contador].y, &tamanhoCobrinha) == 4) {
         contador++;
     }
 
@@ -331,9 +332,9 @@ void refazerTrajetoJogo(int tamanhoTrajeto,Posicao trajeto[]) {
 
 }
 
-  //  for (int i = 0; i < contador; i++) {
-  //      snake(trajeto[i].x, trajeto[i].y); // Chame a função 'snake' para imprimir a cobra na posição correta
-   // }
+    //for (int i = 0; i < contador; i++) {
+    //snake(trajeto[i].x, trajeto[i].y); // Chame a função 'snake' para imprimir a cobra na posição correta
+    //}
 
 
 
@@ -669,7 +670,7 @@ int main()
 
     while(1)
     {
-
+        PilhaRecordes*pilha;
         double tempo_decorrido;
         int x[100], y[100],mx,my, tam = 5;
         char direcao = 'l';
@@ -709,6 +710,7 @@ int main()
             Posicao posicaoAtual;
             posicaoAtual.x = x[1];
             posicaoAtual.y = y[1];
+        
 
              // a posição atual ao trajeto
             trajeto[contador] = posicaoAtual;
@@ -716,7 +718,7 @@ int main()
 
 
 
-            over = gameOver(tam,x,y, Pontuador, &recordes, tempo_decorrido);
+            over = gameOver(tam,x,y, Pontuador, pilha , tempo_decorrido);
 
             switch(direcao)
             {
