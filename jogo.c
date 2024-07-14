@@ -256,7 +256,15 @@ int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *pilha, dou
 
     for(int i=3; i<tam; i++)
     {
-        if(x[0]==x[i]&& y[0]==y[i] || x[0] == 2 || y[0] == 3)
+         if(x[0]==x[i] && y[0]==y[i]){
+            game = 1;
+            posicao((largura/2)-4,altura/2);
+            printf("PERDEU!!!");
+            getchar();
+            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
+            getchar();
+        }
+        if (x[0]== 2 || y[0]== 3)
         {
             game = 1;
             posicao((largura/2)-4,altura/2);
@@ -265,8 +273,10 @@ int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *pilha, dou
             salvarPontuacao(tempo_decorrido, Pontuador, pilha);
             getchar();
         }
-        return game;
+        
+
     }
+    return game;
 }
 
 void snake(int x[100], int y[100], int tam, char direcao)   //Desenha a cobrinha
@@ -516,10 +526,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     exibirRecordes(recordes);
 
                     posicao(10,18);
-
-                    printf("Pressione Enter para voltar!");
                     getchar();
-
                     system("cls");
                     exibirMenu(recordes, 100000,trajeto);
                     return;
