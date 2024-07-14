@@ -57,6 +57,7 @@ typedef struct
 {
     char nome[50];
     double tempo;
+    int Pontuaçao1;
 } Recorde;
 
 typedef struct
@@ -71,7 +72,7 @@ void ordenaRecordes(PilhaRecordes* pilha)
     {
         for (int j = 0; j < pilha->quantidade - i - 1; j++)
         {
-            if (pilha->recordes[j].tempo > pilha->recordes[j + 1].tempo)
+            if (pilha->recordes[j].Pontuaçao1 < pilha->recordes[j + 1].Pontuaçao1)
             {
                 Recorde temp = pilha->recordes[j];
                 pilha->recordes[j] = pilha->recordes[j + 1];
@@ -147,13 +148,14 @@ void exibirRecordes(PilhaRecordes* pilha)
         {
             printf("%d. Nome: %s\n", i + 1, pilha->recordes[i].nome);
             printf("   Tempo: %.2f segundos\n", pilha->recordes[i].tempo);
+            printf(" Pontuaçao: %d\n",pilha->recordes[i].Pontuaçao1);
         }
     }
 
     printf("\n");
 }
 
-void salvarPontuacao(double tempo_decorrido, PilhaRecordes* pilha)
+void salvarPontuacao(double tempo_decorrido,int Pontuador, PilhaRecordes* pilha)
 {
     char nome[50];
 
@@ -164,6 +166,7 @@ void salvarPontuacao(double tempo_decorrido, PilhaRecordes* pilha)
     Recorde recorde;
     strcpy(recorde.nome, nome);
     recorde.tempo = tempo_decorrido;
+    recorde.Pontuaçao1 = Pontuador;
 
     if (pilha->quantidade < MAX_RECORDS)
     {
@@ -244,24 +247,26 @@ void mapa(int largura, int altura)   //Desenha o mapa
 
     posicao((largura/2)-25,1);
 
-    printf("%s","J O G O  D A  C O B R I N H A");
+    printf("%s","S N A K E");
 }
 
-int gameOver(int tam, int x[], int y[] )
+int gameOver(int tam, int x[], int y[], int Pontuador, PilhaRecordes *pilha, double tempo_decorrido)
 {
-    int game=0;
+   int game=0;
 
     for(int i=3; i<tam; i++)
     {
-        if(x[0]==x[i]&& y[0]==y[i])
+        if(x[0]==x[i]&& y[0]==y[i] || x[0] == 2 || y[0] == 3)
         {
             game = 1;
             posicao((largura/2)-4,altura/2);
-            printf("GAME OVER");
+            printf("PERDEU!!!");
+            getchar();
+            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
             getchar();
         }
+        return game;
     }
-    return game;
 }
 
 void snake(int x[100], int y[100], int tam, char direcao)   //Desenha a cobrinha
@@ -441,8 +446,8 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
         {
             system("cls");
             posicao(10,1);
-            textColor(RED, _BLACK);
-            printf("%s","J O G O  D A  C O B R I N H A");
+            textColor(RED, _WHITE);
+            printf("%s","S N A K E");
             printf("\n\n\n");
             for (count=0; count<7; count++)
             {
@@ -505,7 +510,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     system("cls");
                     posicao(10,1);
 
-                    printf("%s","J O G O  D A  C O B R I N H A");
+                    printf("%s","S N A K E");
                     printf("\n\n\n");
 
                     exibirRecordes(recordes);
@@ -527,7 +532,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     posicao(10,1);
 
-                    printf("%s","J O G O  D A  C O B R I N H A");
+                    printf("%s","S N A K E");
 
 
                     posicao(10,(altura/2)-6);
@@ -590,7 +595,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     posicao(10,1);
 
-                    printf("%s","J O G O  D A  C O B R I N H A");
+                    printf("%s","S N A K E");
 
                     posicao(10,(altura/2)-6);
                     printf("INSTRUCOES:\n\n");
@@ -627,7 +632,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     printf("CUIDADO COM O BEBE TALES GABRIEL!!!!");
                     getchar();
                     system("cls");
-                      exibirMenu(recordes, 100000,trajeto);
+                        exibirMenu(recordes, 100000,trajeto);
                     return 0;
                     break;
 
@@ -658,12 +663,12 @@ int main()
     while(1)
     {
 
-
-        int x[30], y[30],mx,my, tam = 5;
+        double tempo_decorrido;
+        int x[100], y[100],mx,my, tam = 5;
         char direcao = 'l';
         int pontos = 0, over=0;
         time_t start_time, current_time;
-        double tempo_decorrido;
+        int Pontuador = 0;
         int contador = 0;
 
 
@@ -690,6 +695,7 @@ int main()
 
         start_time = clock();
 
+
         while(over==0)
         {
             // Simulação do trajeto da cobrinha
@@ -703,7 +709,7 @@ int main()
 
 
 
-            over = gameOver(tam,x,y);
+            over = gameOver(tam,x,y, Pontuador, &recordes, tempo_decorrido);
 
             switch(direcao)
             {
@@ -776,6 +782,7 @@ int main()
                 maca(mx,my);
 
                 pontos++;
+                Pontuador = pontos;
                 tam++;
 
             }
@@ -793,11 +800,9 @@ int main()
             current_time = clock();
 
 
-            tempo_decorrido = calculaTempo(start_time, current_time);
-
-            if(tam==25)
+            tempo_decorrido = calculaTempo(start_time, current_time); 
+            if(tam==105)
             {
-                over = 1;
                 posicao((largura/2)-15,altura/2);
                 printf("VOÇE CONCLUIU O JOGO!");
 
@@ -805,7 +810,7 @@ int main()
                 printf("%s%.2f","o seu tempo foi : ",tempo_decorrido); //Armazenar no RANKING
                 getchar();
 
-                salvarPontuacao(tempo_decorrido, &recordes);
+                salvarPontuacao(tempo_decorrido,Pontuador, &recordes);
             }
         }
     }
