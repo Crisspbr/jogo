@@ -608,8 +608,8 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     posicao(10,(altura/2)-6);
                     printf("INSTRUCOES:\n\n");
-                    printf("-> O objetivo do jogo e comer 20 cabeCas de TALES sorridente \nno menor tempo possivel para obter melhor ranking!\n");
-                    printf("-> Se a cobra bater nela mesma o jogo acaba!(paredes nao contam como derrota!!!)\n\n");
+                    printf("-> O objetivo do jogo e comer o maximo de macas possiveis \n   no menor tempo possivel para obter melhor ranking!\n");
+                    printf("-> Se a cobra bater nela mesma ou na parede o jogo acaba!(paredes nao contam como derrota!!!)\n\n");
                     printf("CONTROLES: \n\n");
                     printf("-> Use as setas do teclado ou as letras \"WASD\" \npara alterar a direcao da cobra!\n\n\n");
 
