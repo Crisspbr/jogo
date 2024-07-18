@@ -65,12 +65,12 @@ typedef struct
     Recorde recordes[MAX_RECORDS];
     int quantidade;
 } PilhaRecordes;
-
+int i, j;
 void ordenaRecordes(PilhaRecordes* pilha)
 {
-    for (int i = 0; i < pilha->quantidade - 1; i++)
+    for ( i = 0; i < pilha->quantidade - 1; i++)
     {
-        for (int j = 0; j < pilha->quantidade - i - 1; j++)
+        for ( j = 0; j < pilha->quantidade - i - 1; j++)
         {
             if (pilha->recordes[j].Pontuacao1 < pilha->recordes[j + 1].Pontuacao1)
             {
@@ -114,7 +114,7 @@ void carregarRecordes(PilhaRecordes* pilha)
     fclose(arquivo);
 }
 
-
+int i;
 void salvarRecordes(PilhaRecordes* pilha)
 {
     FILE* arquivo = fopen("recordes.txt", "w");
@@ -124,7 +124,7 @@ void salvarRecordes(PilhaRecordes* pilha)
         return;
     }
 
-    for (int i = 0; i < pilha->quantidade; i++)
+    for ( i = 0; i < pilha->quantidade; i++)
     {
         fwrite(&pilha->recordes[i], sizeof(Recorde), 1, arquivo);
     }
@@ -132,7 +132,7 @@ void salvarRecordes(PilhaRecordes* pilha)
     fclose(arquivo);
 
 }
-
+int i;
 void exibirRecordes(PilhaRecordes* pilha)
 {
     printf("\nRecordes:\n");
@@ -144,7 +144,7 @@ void exibirRecordes(PilhaRecordes* pilha)
     else
     {
         ordenaRecordes(pilha);
-        for (int i = 0; i < pilha->quantidade; i++)
+        for ( i = 0; i < pilha->quantidade; i++)
         {
             printf("%d. Nome: %s\n", i + 1, pilha->recordes[i].nome);
             printf("   Tempo: %.2f segundos\n", pilha->recordes[i].tempo);
@@ -154,7 +154,7 @@ void exibirRecordes(PilhaRecordes* pilha)
 
     printf("\n");
 }
-
+int i;
 void salvarPontuacao(double tempo_decorrido,int Pontuador, PilhaRecordes* pilha)
 {
     char nome[50];
@@ -175,7 +175,7 @@ void salvarPontuacao(double tempo_decorrido,int Pontuador, PilhaRecordes* pilha)
     }
     else
     {
-        for (int i = MAX_RECORDS - 1; i >= 1; i--)
+        for ( i = MAX_RECORDS - 1; i >= 1; i--)
         {
             pilha->recordes[i] = pilha->recordes[i - 1];
         }
@@ -193,11 +193,11 @@ typedef struct {
     int x;
     int y;
 } Posicao;
-
+int i;
 void salvarTrajetoJogo(Posicao trajeto[], int contador, int tamanhoCobrinha) {
     FILE* arquivo = fopen("trajeto_jogo.txt", "w");
     if (arquivo != NULL) {
-        for (int i = 0; i < contador; i++) {
+        for ( i = 0; i < contador; i++) {
             fprintf(arquivo, "%d,%d,%d\n", trajeto[i].x, trajeto[i].y, tamanhoCobrinha);
         }
         fclose(arquivo);
@@ -250,10 +250,11 @@ void mapa(int largura, int altura)   //Desenha o mapa
     printf("%s","S N A K E");
 }
 int game=0;
+int i;
 int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, PilhaRecordes*pilha)
 {
     
-    for(int i=3; i<tam; i++)
+    for( i=3; i<tam; i++)
     {
          if (x[0]<= 2 || y[0]<= 3)
         {
@@ -279,7 +280,7 @@ int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, P
     return game;
 
 }
-
+int i;
 void snake(int x[100], int y[100], int tam)   //Desenha a cobrinha ->char direcao<-
 {
     posicao(x[1], y[1]);  //Desenha a cabeca
@@ -287,12 +288,12 @@ void snake(int x[100], int y[100], int tam)   //Desenha a cobrinha ->char direca
 
 
 
-    for(int i=2; i<tam; i++) //Desenha o corpo
+    for( i=2; i<tam; i++) //Desenha o corpo
     {
         posicao(x[i], y[i]);
         printf("%c", 219);
     }
-    for(int i=tam; i>1; i--)  //Atualiza as posiçoes do corpo
+    for( i=tam; i>1; i--)  //Atualiza as posiçoes do corpo
     {
         x[i]=x[i-1];
         y[i]=y[i-1];
