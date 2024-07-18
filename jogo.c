@@ -3,7 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
-#define MAX_RECORDS 5
+#define MAX_RECORDS 10
 int largura = 80, altura = 20;
 int velocidade = 100;
 void textColor(int letras, int fundo);
@@ -370,7 +370,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
         {
             system("cls");
             posicao(10,1);
-            textColor(LIGHTBLUE, _WHITE);
+            textColor(BLACK, _LIGHTRED);
             printf("%s","S N A K E");
             printf("\n\n\n");
             for (count=0; count<7; count++)
@@ -445,11 +445,11 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                         posicao(10,(altura/2)-6);
                         printf("Selecionado nivel: Facil");
                         posicao(10,(altura/2)-4);
-                        printf("\Pressione Enter para voltar!");
+                        printf("Pressione Enter para voltar!");
                         getchar();
                         break;
                     case '2':
-                        velocidade = 50;  // Velocidade média
+                        velocidade = 75;  // Velocidade média
                         system("cls");
                         posicao(10,(altura/2)-6);
                         printf("Selecionado nivel: Medio");
@@ -477,11 +477,10 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     printf("%s","S N A K E");
                     posicao(10,(altura/2)-6);
                     printf("INSTRUCOES:\n\n");
-                    printf("-> O objetivo do jogo e comer o maximo de macas possiveis \n   no menor tempo possivel para obter melhor ranking!\n");
-                    printf("-> Se a cobra bater nela mesma ou na parede o jogo acaba!(paredes nao contam como derrota!!!)\n\n");
+                    printf("-> O objetivo do jogo e comer o maximo de macas possiveis \n   no menor tempo possivel para obter melhor ranking!\n\n");
                     printf("-> Se a cobra bater nela mesma ou na parede o jogo acaba!\n\n");
                     printf("CONTROLES: \n\n");
-                    printf("-> Use as setas do teclado ou as letras \"WASD\" \npara alterar a direcao da cobra!\n\n\n");
+                    printf("-> Use as setas do teclado ou as letras \"WASD\" \n    para alterar a direcao da cobra!\n\n\n");
 
                     printf("Pressione qualquer tecla para voltar!");
                     getchar();
@@ -498,8 +497,8 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     printf("          (\n");
                     printf("       __..)__\n");
                     printf("    .'       `'.\n");
-                    printf("    / - -        `\.\n");
-                    printf("   /(')(')         \.\n");
+                    printf("    / - -        `|.\n");
+                    printf("   /(')(')         |.\n");
                     printf("   /  ^        )   | \n");
                     printf("   /.--.           |\n");
                     printf("    /--'          /\n");
