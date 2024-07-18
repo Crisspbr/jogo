@@ -57,7 +57,7 @@ typedef struct
 {
     char nome[50];
     double tempo;
-    int Pontuaçao1;
+    int Pontuacao1;
 } Recorde;
 
 typedef struct
@@ -72,7 +72,7 @@ void ordenaRecordes(PilhaRecordes* pilha)
     {
         for (int j = 0; j < pilha->quantidade - i - 1; j++)
         {
-            if (pilha->recordes[j].Pontuaçao1 < pilha->recordes[j + 1].Pontuaçao1)
+            if (pilha->recordes[j].Pontuacao1 < pilha->recordes[j + 1].Pontuacao1)
             {
                 Recorde temp = pilha->recordes[j];
                 pilha->recordes[j] = pilha->recordes[j + 1];
@@ -148,7 +148,7 @@ void exibirRecordes(PilhaRecordes* pilha)
         {
             printf("%d. Nome: %s\n", i + 1, pilha->recordes[i].nome);
             printf("   Tempo: %.2f segundos\n", pilha->recordes[i].tempo);
-            printf(" Pontuacao: %d\n",pilha->recordes[i].Pontuaçao1);
+            printf(" Pontuacao: %d\n",pilha->recordes[i].Pontuacao1);
         }
     }
 
@@ -166,7 +166,7 @@ void salvarPontuacao(double tempo_decorrido,int Pontuador, PilhaRecordes* pilha)
     Recorde recorde;
     strcpy(recorde.nome, nome);
     recorde.tempo = tempo_decorrido;
-    recorde.Pontuaçao1 = Pontuador;
+    recorde.Pontuacao1 = Pontuador;
 
     if (pilha->quantidade < MAX_RECORDS)
     {
@@ -224,10 +224,10 @@ void posicao(int x, int y)  //posiciona o cursor na tela
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-
+int i,j;
 void mapa(int largura, int altura)   //Desenha o mapa
 {
-    int i,j;
+    
 
     for(i=0; i<=altura; i++)
     {
@@ -249,10 +249,9 @@ void mapa(int largura, int altura)   //Desenha o mapa
 
     printf("%s","S N A K E");
 }
-
+int game=0;
 int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, PilhaRecordes*pilha)
 {
-   int game=0;
     
     for(int i=3; i<tam; i++)
     {
@@ -264,7 +263,7 @@ int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, P
             getchar();
             salvarPontuacao(tempo_decorrido, Pontuador, pilha);
             getchar();
-            return;
+            return 0;
         }
           if(x[0]==x[i] && y[0]==y[i]){
            game = 1;
@@ -273,7 +272,7 @@ int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, P
            getchar();
            salvarPontuacao(tempo_decorrido, Pontuador, pilha);
            getchar();
-           return;
+           return 0;
         }
 
     }
@@ -281,7 +280,7 @@ int gameOver(int tam, int x[], int y[], double tempo_decorrido, int Pontuador, P
 
 }
 
-void snake(int x[100], int y[100], int tam, char direcao)   //Desenha a cobrinha
+void snake(int x[100], int y[100], int tam)   //Desenha a cobrinha ->char direcao<-
 {
     posicao(x[1], y[1]);  //Desenha a cabeca
     printf("%c", 'O');
@@ -299,7 +298,9 @@ void snake(int x[100], int y[100], int tam, char direcao)   //Desenha a cobrinha
         y[i]=y[i-1];
     }
 }
-
+    int i = 0;
+    int tamanhoCobrinha;
+    int contador = 0;
 void refazerTrajetoJogo(int tamanhoTrajeto,Posicao trajeto[]) {
     FILE* arquivo = fopen("trajeto_jogo.txt", "r");
     if (arquivo == NULL) {
@@ -309,9 +310,7 @@ void refazerTrajetoJogo(int tamanhoTrajeto,Posicao trajeto[]) {
 
 
 
-    int tamanhoCobrinha;
-    int contador = 0;
-    int i = 0;
+    
 
     while (contador < tamanhoTrajeto && fscanf(arquivo, "%d,%d,%d\n", &trajeto[contador].x, &trajeto[contador].y, &tamanhoCobrinha) == 4) {
         contador++;
@@ -320,13 +319,13 @@ void refazerTrajetoJogo(int tamanhoTrajeto,Posicao trajeto[]) {
     fclose(arquivo);
 
     while(i < tamanhoTrajeto){
-    posicao(trajeto[i].x, &trajeto[i].y);  //Desenha a cabeca
+    posicao(trajeto[i].x, trajeto[i].y);  //Desenha a cabeca
     printf("%c", 'O');
 
     Sleep(100);
 
 
-    posicao(trajeto[i].x, &trajeto[i].y); // Apaga o rastro
+    posicao(trajeto[i].x, trajeto[i].y); // Apaga o rastro
             printf("%s"," ");
     }
 
@@ -427,10 +426,10 @@ void pontuacao(int pontos)
     posicao(largura-13,1);
     printf("%s%d","pontos: ",pontos);
 }
-
+double total;
 double calculaTempo(time_t start_time, time_t current_time)
 {
-    double total;
+    
 
     total = (double)(current_time - start_time) / CLOCKS_PER_SEC;
 
@@ -440,13 +439,13 @@ double calculaTempo(time_t start_time, time_t current_time)
     return total;
 }
 
-
-void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
-{
     int enter = 0;
     int count;
     int opcao = 6;
     int opcaoAnterior = -1;
+void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
+{
+   
 
 
 
@@ -559,7 +558,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                         posicao(10,(altura/2)-6);
                         printf("Selecionado nivel: Facil");
                         posicao(10,(altura/2)-4);
-                        printf("\Pressione Enter para voltar!");
+                        printf("Pressione Enter para voltar!");
                         getchar();
 
                         break;
@@ -591,7 +590,7 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     system("cls");
                       exibirMenu(recordes, 100000,trajeto);
 
-                    return 0;
+                    return;
 
 
 
@@ -618,21 +617,21 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
 
                     system("cls");
                       exibirMenu(recordes, 100000,trajeto);
-                    return 0;
+                    return;
                     break;
 
                 case 5:
                     exit(0);
                     break;
 
-                }
+                
                 case 6:
 	                system("cls");
                     printf("          (\n");
                     printf("       __..)__\n");
                     printf("    .'       `'.\n");
-                    printf("    / - -        `\.\n");
-                    printf("   /(')(')         \.\n");
+                    printf("    / - -        `|.\n");
+                    printf("   /(')(')         |.\n");
                     printf("   /  ^        )   | \n");
                     printf("   /.--.           |\n");
                     printf("    /--'          /\n");
@@ -642,13 +641,13 @@ void exibirMenu(PilhaRecordes* recordes, int tamanhoTrajeto, Posicao trajeto[])
                     getchar();
                     system("cls");
                         exibirMenu(recordes, 100000,trajeto);
-                    return 0;
+                    return;
                     break;
 
 
 
                 break;
-
+                }
             }
         }
     }
@@ -659,7 +658,7 @@ int main()
     int tamanhoTrajeto = 100000;  // Definir tamanho maximo do trajeto
     Posicao trajeto[tamanhoTrajeto];
 
-    int opcao;
+    
 
 
 
@@ -671,7 +670,7 @@ int main()
 
     while(1)
     {
-        PilhaRecordes*pilha;
+        
         double tempo_decorrido;
         int x[100], y[100],mx,my, tam = 5;
         char direcao = 'l';
@@ -731,7 +730,7 @@ int main()
                     y[1] = altura-1;
                 }
 
-                snake(x, y, tam, direcao);
+                snake(x, y, tam);
 
                 Sleep(velocidade);
                 y[0] = y[1];
@@ -746,7 +745,7 @@ int main()
                     y[1] = 3;
                 }
 
-                snake(x, y, tam, direcao);
+                snake(x, y, tam);
 
                 Sleep(velocidade);
                 y[0] = y[1];
@@ -760,7 +759,7 @@ int main()
                     x[1] = 2;
                 }
 
-                snake(x, y, tam, direcao);
+                snake(x, y, tam);
 
                 x[0] = x[1];
                 Sleep(velocidade);
@@ -775,7 +774,7 @@ int main()
                     x[1] = largura-3;
                 }
 
-                snake(x, y, tam, direcao);
+                snake(x, y, tam);
 
                 Sleep(velocidade);
                 x[0] = x[1];
